@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Semantic Webpage</title>
+
+    <!--Add favicon  -->
+    <link rel="icon" href="images/notes.png" type="image/png" />
+    <!-- end favicon -->
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/script.js" defer></script>
+  </head>
+  <body>
+    <!-- Header Section -->
+    <header>
+      <!-- <nav>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav> -->
+      <h1>Notes App</h1>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <!-- <section id="about">
+        <h2>About Us</h2>
+        <p>We provide high-quality web solutions for businesses worldwide.</p>
+      </section> -->
+
+      <section class="container services relative">
+        <article class="files-edit text-orange">
+          <article class="d-flex justify-between">
+            <p>
+              <span><i class="fa-solid fa-angle-left"></i></span> Folder
+            </p>
+            <p class="edit">Edit</p>
+          </article>
+          <h2>Notes</h2>
+        </article>
+        <article class="search-container relative w-full">
+          <input
+            type="text"
+            name="search"
+            class="search-bar rounded p-left w-full bg-black border-0"
+            placeholder="Search"
+          />
+          <article
+            class="d-flex justify-between absolute absolute-center w-full"
+          >
+            <span><i class="fa-solid fa-magnifying-glass"></i></span>
+            <span><i class="fa-solid fa-microphone"></i></span>
+          </article>
+        </article>
+
+        <section class="notes-container w-full rounded hidden">
+          <!-- <article class="added-note w-full">
+            <h4 class="note-heading">Web Development</h4>
+            <article class="paragraph d-flex overflow-hidden">
+              <p class="creation-date">12/12/2025</p>
+              <p class="text">
+                Creating modern, responsive websites with cutting-edge
+                technology.
+              </p>
+            </article>
+          </article> -->
+        </section>
+
+        <article class="absolute note-bottom d-flex justify-between">
+          <p><span class="number-notes"></span>Notes</p>
+          <span class="add-note cursor-pointer"
+            ><i
+              class="fa-solid fa-pen-to-square text-orange text-lg font-normal"
+            ></i
+          ></span>
+        </article>
+      </section>
+    </main>
+
+    <!-- Sidebar -->
+    <!-- <aside>
+      <h2>Latest News</h2>
+      <p>Check out our recent projects and updates.</p>
+    </aside> -->
+
+    <!-- Footer Section -->
+    <footer>
+      <p>
+        &copy; <span class="year"></span> My Web Project |
+        <a href="#contact">Contact Us</a>
+      </p>
+    </footer>
+  </body>
+</html>
