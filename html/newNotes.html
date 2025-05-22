@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Semantic Webpage</title>
+    <title>Notes</title>
 
     <!--Add favicon  -->
-    <link rel="icon" href="images/notes.png" type="image/png" />
+    <link rel="icon" href="/images/notes.png" type="image/png" />
     <!-- end favicon -->
 
     <link
@@ -16,8 +16,8 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="css/style.css" />
-    <script src="js/script.js" defer></script>
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="/js/script.js" defer></script>
   </head>
   <body>
     <!-- Header Section -->
@@ -43,31 +43,28 @@
         <article class="files-edit text-orange">
           <article class="d-flex justify-between">
             <p>
-              <span><i class="fa-solid fa-angle-left"></i></span> Folder
+              <span><i class="fa-solid fa-angle-left"></i></span> Notes
             </p>
-            <p class="edit">Edit</p>
+            <p class="done">Done</p>
+            <!-- <input
+              class="done border-0 text-orange"
+              type="submit"
+              value="Done"
+            /> -->
           </article>
-          <h2>Notes</h2>
         </article>
-        <article class="search-container relative w-full">
-          <input
+        <article class="textarea-container relative">
+          <!-- <input
             type="text"
-            name="search"
-            class="search-bar rounded p-left w-full bg-black border-0"
-            placeholder="Search"
-          />
-          <article
-            class="d-flex justify-between absolute absolute-center w-full"
-          >
-            <span><i class="fa-solid fa-magnifying-glass"></i></span>
-            <span><i class="fa-solid fa-microphone"></i></span>
-          </article>
+            class="note-title rounded p-left w-full border-0 absolute"
+          /> -->
+          <textarea
+            name="new-text"
+            class="bg-black border-0"
+            id="new-text"
+            cols="35"
+          ></textarea>
         </article>
-
-        <section class="notes-container w-full rounded hidden">
-          
-        </section>
-
         <article class="absolute note-bottom d-flex justify-between">
           <p><span class="number-notes"></span>Notes</p>
           <span class="add-note cursor-pointer"
@@ -89,7 +86,7 @@
     <footer>
       <p>
         &copy; <span class="year"></span> My Web Project |
-        <a href="/html/newNotes.html"">Contact Us</a>
+        <a href="#contact">Contact Us</a>
       </p>
     </footer>
   </body>
