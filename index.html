@@ -11,10 +11,8 @@
 
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
       crossorigin="anonymous"
-      referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="css/style.css" />
     <script src="js/script.js" defer></script>
@@ -45,7 +43,7 @@
             <p>
               <span><i class="fa-solid fa-angle-left"></i></span> Folder
             </p>
-            <p class="edit">Edit</p>
+            <p class="edit cursor-pointer">Edit</p>
           </article>
           <h2>Notes</h2>
         </article>
@@ -65,7 +63,13 @@
         </article>
 
         <section class="notes-container w-full rounded hidden">
-          
+          <!-- <article class="added-note w-full">
+            <h4 class="note-heading">title</h4>
+            <article class="paragraph d-flex overflow-hidden">
+              <p class="creation-date">12/12/1998</p>
+              <p class="text">wadfddsffffdewrrsdgdrtersfser</p>
+            </article>
+          </article> -->
         </section>
 
         <article class="absolute note-bottom d-flex justify-between">
@@ -76,6 +80,33 @@
             ></i
           ></span>
         </article>
+      </section>
+      <section class="absolute create-note middle-absolute hidden">
+        <section class="container services relative">
+          <article class="files-edit text-orange d-flex justify-between">
+            <p class="cursor-pointer back-to-list">
+              <span><i class="fa-solid fa-angle-left"></i></span> Notes
+            </p>
+            <p class="done cursor-pointer">Done</p>
+          </article>
+          <article class="textarea-container relative">
+            <textarea
+              name="new-text"
+              class="bg-black border-0"
+              id="new-text"
+              cols="35"
+            ></textarea>
+          </article>
+          <article
+            class="absolute note-bottom d-flex justify-between text-orange new-note--bottom d-flex justify-between"
+          >
+            <i class="fa-regular fa-trash-can text-orange delete-btn"></i>
+            <i
+              class="fa-solid fa-arrow-up-from-bracket text-orange share-btn"
+            ></i>
+            <i class="fa-regular fa-pen-to-square text-orange"></i>
+          </article>
+        </section>
       </section>
     </main>
 
@@ -89,7 +120,7 @@
     <footer>
       <p>
         &copy; <span class="year"></span> My Web Project |
-        <a href="/html/newNotes.html"">Contact Us</a>
+        <!-- <a href="/html/newNotes.html">Contact Us</a> -->
       </p>
     </footer>
   </body>

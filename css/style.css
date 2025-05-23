@@ -56,6 +56,10 @@ img {
   height: auto;
   display: block;
 }
+i {
+  font-size: 1.25rem;
+  cursor: pointer;
+}
 
 /* ===== CONTAINER ===== */
 .container {
@@ -153,6 +157,11 @@ img {
   padding-left: 0.4rem;
   font-size: 0.8rem;
   opacity: 0.5;
+}
+.middle-absolute {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -15%);
 }
 .fixed {
   position: fixed;
@@ -416,6 +425,11 @@ img {
   padding-left: 45%;
   padding-right: 0.7rem;
   align-items: center;
+}
+.new-note--bottom {
+  padding: 0.7rem;
+  font-size: 2rem;
+  background-color: black;
 }
 .notes-container {
   width: 100%;

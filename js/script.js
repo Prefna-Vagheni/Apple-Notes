@@ -4,16 +4,27 @@ const notesContainer = document.querySelector('.notes-container');
 const addNote = document.querySelector('.add-note');
 const searchNote = document.querySelector('.search-bar');
 const editTheList = document.querySelector('.edit');
+const createNote = document.querySelector('.create-note');
+
 const searchWithVoice = document.querySelector('.fa-microphone');
-const noteTitile = document.querySelector('.note-title');
+// const noteTitile = document.querySelector('.note-title');
 const textarea = document.querySelector('textarea');
 const submitBtn = document.querySelector('.done');
 
+// console.log(Date.now(), new Date());
+
 let keyPressed;
 let fileTitle;
-const remaingText = [];
+let notesArray = JSON.parse(localStorage.getItem('allNotes')) || [];
+// const remaingText = [];
 
 console.log(notesContainer);
+
+document.querySelector('.year').textContent = new Date().getFullYear();
+
+let lineForTitle;
+let plainText;
+let textValue;
 
 const formatDate = function () {
   const rawDate = new Date();
@@ -26,29 +37,79 @@ const formatDate = function () {
   return dateStamp;
 };
 
-document.querySelector('.year').textContent = new Date().getFullYear();
+const toggleNewNotePage = function (param) {
+  return param === 'add'
+    ? createNote.classList.add('hidden')
+    : createNote.classList.remove('hidden');
+};
 
-let lineForTitle;
-let plainText;
-let textValue;
-let areaVAlue = textarea.value;
+const addNewNote = function () {
+  const fieldValue = textarea.value.split('\n');
+  const headline = fieldValue[0];
+  const remaingText = fieldValue.slice(1).join(' ');
 
-textarea.addEventListener('keydown', function (e) {
-  const lines = textarea.value.split('\n');
-  keyPressed = e.key;
-  if (areaVAlue) {
-    textValue = areaVAlue;
-    console.log(textarea.value);
-  }
-  if (e.key === 'Enter') {
-    lineForTitle = lines[0];
-    plainText = lines.slice(1).join(' ');
-    textValue = textarea.value.split('\n');
-  }
-  console.log(plainText, lineForTitle);
-  console.log(textValue);
-});
-console.log(textValue);
+  if (!headline && !remaingText) return toggleNewNotePage('add');
+
+  const noteObject = {
+    tite: headline,
+    body: remaingText,
+    date: formatDate,
+  };
+
+  notesArray.push({ title: headline, content: remaingText });
+
+  localStorage.setItem('allNotes', JSON.stringify(noteObject));
+
+  // Save data to local Storage
+  // localStorage.setItem('saveNote', JSON.stringify(noteObject));
+
+  // Get data
+  // const storedData = JSON.parse(localStorage.getItem('saveNote'));
+  // console.log(storedData);
+  // Remove specific item
+  // localStorage.removeItem('saveNote');
+
+  //Clear all data
+  // localStorage.clear();
+
+  textarea.value = '';
+  toggleNewNotePage('add');
+  const html = `
+    <article class="added-note w-full">
+     <h4 class="note-heading">${headline}</h4>
+     <article class="paragraph d-flex overflow-hidden">
+       <p class="creation-date">${formatDate()}</p>
+       <p class="text">${remaingText}</p>
+     </article>
+    </article>
+    `;
+  notesContainer.classList.remove('hidden');
+  notesContainer.insertAdjacentHTML('afterbegin', html);
+};
+
+const saveNoteToLocalhost = function () {};
+
+// let areaVAlue = textarea.value;
+// ========================================================
+
+// textarea.addEventListener('keydown', function (e) {
+//   const lines = textarea.value.split('\n');
+//   keyPressed = e.key;
+//   if (areaVAlue) {
+//     textValue = areaVAlue;
+//     console.log(textarea.value);
+//   }
+//   if (e.key === 'Enter') {
+//     lineForTitle = lines[0];
+//     plainText = lines.slice(1).join(' ');
+//     textValue = textarea.value.split('\n');
+//   }
+//   console.log(plainText, lineForTitle);
+//   console.log(textValue);
+// });
+// console.log(textValue);
+
+// =========================================================
 
 // textarea.addEventListener('input', function () {
 //   //   const totalLines = this.value.split('\n');
@@ -64,20 +125,33 @@ console.log(textValue);
 //   }
 // });
 
-submitBtn.addEventListener('click', (e) => {
-  const value = textarea.value.split('\n');
-  const headline = value[0];
-  const remaingText = value.slice(1).join(' ');
+addNote.addEventListener('click', () => {
+  toggleNewNotePage('remove');
+});
 
-  const html = `
-    <article class="added-note w-full">
-     <h4 class="note-heading">${fileTitle}</h4>
-     <article class="paragraph d-flex overflow-hidden">
-       <p class="creation-date">${formatDate()}</p>
-       <p class="text">${remaingText}</p>
-     </article>
-    </article>
-    `;
-  notesContainer.insertAdjacentHTML('beforeend', html);
+document.querySelector('.back-to-list').addEventListener('click', () => {
+  toggleNewNotePage('add');
+
+  addNewNote();
+});
+
+submitBtn.addEventListener('click', () => {
+  addNewNote();
+});
+
+// Share file
+document.querySelector('.share-btn').addEventListener('click', function () {
+  const title = document.querySelector('h1');
+  const body = document.querySelector('section');
+
+  navigator.share?.({
+    title: title,
+    text: body,
+  }) ?? alert('Nothing to be shared.');
+});
+
+//Delete file
+document.querySelector('.delete-btn').addEventListener('click', () => {
   textarea.value = '';
+  toggleNewNotePage('add');
 });
