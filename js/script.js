@@ -57,6 +57,7 @@ const addNewNote = function () {
   if (!headline && !remaingText) return toggleNewNotePage('add');
 
   const noteObject = {
+    id: Date.now(),
     title: headline,
     body: remaingText,
     date: formatDate(),
@@ -112,9 +113,19 @@ document.querySelector('.share-btn').addEventListener('click', function () {
   }) ?? alert('Nothing to be shared.');
 });
 
+// Delete an item from the localStorage
 notesContainer.addEventListener('click', (e) => {
-  console.log(e.target);
-  if (!e.target.classList.contains('added-note')) return;
+  const card = e.target.closest('.added-note');
+  const noteId = Number(card.dataset.id);
+
+  if (!e.target.closest('.added-note').classList.contains('added-note')) return;
+  card.remove();
+
+  let savedNotes = JSON.parse(localStorage.getItem('notes')) || [];
+  savedNotes = savedNotes.filter((note) => note.id !== noteId);
+  localStorage.setItem('notes', JSON.stringify(savedNotes));
+
+  console.log('Condition cleared');
   const noteElement = e.target.closest('.added-note');
 });
 
@@ -123,3 +134,5 @@ document.querySelector('.delete-btn').addEventListener('click', () => {
   textarea.value = '';
   toggleNewNotePage('add');
 });
+
+console.log(window);
