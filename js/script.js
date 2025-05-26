@@ -21,7 +21,7 @@ let textValue;
 const addNoteToDom = function (note) {
   toggleNewNotePage('add');
   const html = `
-    <article class="added-note w-full">
+    <article class="added-note w-full" data-id="${note.id}">
      <h4 class="note-heading">${note.title}</h4>
      <article class="paragraph d-flex overflow-hidden">
        <p class="creation-date">${note.date}</p>
@@ -76,9 +76,17 @@ const addNewNote = function () {
 };
 
 const removeNote = function (e) {
-  if (!e.taget.classList.contains('added-note')) return;
-  console.log(e.target);
-  const noteElement = e.target.closest('added-note');
+  const card = e.target.closest('.added-note');
+  const noteId = +card.dataset.id;
+
+  if (!e.target.closest('.added-note').classList.contains('added-note')) return;
+  card.remove();
+
+  console.log(noteId);
+
+  let savedNotes = JSON.parse(localStorage.getItem('notes')) || [];
+  savedNotes = savedNotes.filter((note) => note.id !== noteId);
+  localStorage.setItem('notes', JSON.stringify(savedNotes));
 };
 
 addNote.addEventListener('click', () => {
@@ -114,20 +122,11 @@ document.querySelector('.share-btn').addEventListener('click', function () {
 });
 
 // Delete an item from the localStorage
-notesContainer.addEventListener('click', (e) => {
-  const card = e.target.closest('.added-note');
-  const noteId = Number(card.dataset.id);
+notesContainer.addEventListener('click', removeNote);
 
-  if (!e.target.closest('.added-note').classList.contains('added-note')) return;
-  card.remove();
-
-  let savedNotes = JSON.parse(localStorage.getItem('notes')) || [];
-  savedNotes = savedNotes.filter((note) => note.id !== noteId);
-  localStorage.setItem('notes', JSON.stringify(savedNotes));
-
-  console.log('Condition cleared');
-  const noteElement = e.target.closest('.added-note');
-});
+// document.querySelector('.added-note').addEventListener('dblclick', () => {
+//   console.log('hey');
+// });
 
 //Delete file
 document.querySelector('.delete-btn').addEventListener('click', () => {
@@ -136,3 +135,4 @@ document.querySelector('.delete-btn').addEventListener('click', () => {
 });
 
 console.log(window);
+console.log(removeNote);
