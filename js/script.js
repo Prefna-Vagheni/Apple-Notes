@@ -33,7 +33,23 @@ const addNoteToDom = function (note) {
   notesContainer.insertAdjacentHTML('afterbegin', html);
 };
 
-const formatDate = function () {
+console.log(Date.now(), new Date('2025-05-21T15:30:00').getTime());
+
+const formatDate = function (dateInput) {
+  const now = Date.now();
+  const then = new Date(dateInput).getTime();
+
+  const diffMs = now - then;
+  const diffSec = Math.floor(diffMs / 1000);
+  const diffMin = Math.floor(diffMs / (1000 * 60));
+  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+  const diffDay = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  if (diffMin < 60) return `${diffMin} min${diffMin !== 1 ? 's' : ''} ago`;
+  if (diffHours < 24)
+    return `${diffHours} min${diffHours !== 1 ? 's' : ''} ago`;
+  if (diffDay < 60) return `${diffDay} min${diffDay !== 1 ? 's' : ''} ago`;
+
   const rawDate = new Date();
   const day = String(rawDate.getDate()).padStart(2, '0');
   const month = String(rawDate.getUTCMonth() + 1).padStart(2, '0');
@@ -50,6 +66,7 @@ const toggleNewNotePage = function (param) {
     : createNote.classList.remove('hidden');
 };
 
+// Add a new note
 const addNewNote = function () {
   const fieldValue = textarea.value.split('\n');
   const headline = fieldValue[0];
@@ -76,6 +93,7 @@ const addNewNote = function () {
   notesContainer.classList.remove('hidden');
 };
 
+// Edit a single note
 const editNote = function (e) {
   if (!e.target.classList.contains('edit-single-note')) return;
 
@@ -94,6 +112,7 @@ const editNote = function (e) {
   toggleNewNotePage('remove');
 };
 
+// Delete a single note from DOM and localStorage.
 const removeNote = function (e) {
   const card = e.target.closest('.added-note');
   const noteId = +card.dataset.id;
@@ -141,7 +160,7 @@ document.querySelector('.share-btn').addEventListener('click', function () {
   }) ?? alert('Nothing to be shared.');
 });
 
-// Delete an item from the localStorage
+// Event listener to delete an item from the localStorage
 notesContainer.addEventListener('click', removeNote);
 
 //Delete file
