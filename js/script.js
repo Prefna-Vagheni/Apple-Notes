@@ -17,6 +17,7 @@ document.querySelector('.year').textContent = new Date().getFullYear();
 let lineForTitle;
 let plainText;
 let textValue;
+let currentlyEditinfgNoteId;
 
 const addNoteToDom = function (note) {
   toggleNewNotePage('add');
@@ -75,18 +76,37 @@ const addNewNote = function () {
   notesContainer.classList.remove('hidden');
 };
 
+const editNote = function (e) {
+  if (!e.target.classList.contains('edit-single-note')) return;
+
+  const noteElement = e.target.closest('.added-note');
+  const noteId = +noteElement.dataset.id;
+
+  const savedNote = JSON.parse(localStorage.getItem('notes')) || [];
+  const noteToEdit = savedNotes.find((note) => note.id === noteId);
+
+  if (!noteToEdit) return;
+
+  textarea.value = `${noteToEdit.title}\n${noteToEdit.body}`;
+
+  currentlyEditinfgNoteId = noteId;
+
+  toggleNewNotePage('remove');
+};
+
 const removeNote = function (e) {
   const card = e.target.closest('.added-note');
   const noteId = +card.dataset.id;
 
   if (!e.target.closest('.added-note').classList.contains('added-note')) return;
-  card.remove();
 
-  console.log(noteId);
+  card.remove();
 
   let savedNotes = JSON.parse(localStorage.getItem('notes')) || [];
   savedNotes = savedNotes.filter((note) => note.id !== noteId);
   localStorage.setItem('notes', JSON.stringify(savedNotes));
+
+  console.log(savedNotes);
 };
 
 addNote.addEventListener('click', () => {
@@ -124,15 +144,8 @@ document.querySelector('.share-btn').addEventListener('click', function () {
 // Delete an item from the localStorage
 notesContainer.addEventListener('click', removeNote);
 
-// document.querySelector('.added-note').addEventListener('dblclick', () => {
-//   console.log('hey');
-// });
-
 //Delete file
 document.querySelector('.delete-btn').addEventListener('click', () => {
   textarea.value = '';
   toggleNewNotePage('add');
 });
-
-console.log(window);
-console.log(removeNote);
