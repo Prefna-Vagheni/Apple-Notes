@@ -33,32 +33,43 @@ const addNoteToDom = function (note) {
   notesContainer.insertAdjacentHTML('afterbegin', html);
 };
 
-console.log(Date.now(), new Date('2025-05-21T15:30:00').getTime());
+const now = Date.now();
+const then = new Date('12/10/2024').getTime();
+console.log(now, then);
+console.log(now - then);
 
 const formatDate = function (dateInput) {
   const now = Date.now();
-  const then = new Date(dateInput).getTime();
+  const then = new Date(`${dateInput}`).getTime();
 
-  const diffMs = now - then;
-  const diffSec = Math.floor(diffMs / 1000);
-  const diffMin = Math.floor(diffMs / (1000 * 60));
-  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-  const diffDay = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  const diffDate = Math.abs((now - then) / (1000 * 60 * 60 * 24));
+  console.log(diffDate);
+  // const diffSec = Math.floor(diffMs / 1000);
+  // const diffMin = Math.floor(diffMs / (1000 * 60));
+  // const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+  // const diffDay = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-  if (diffMin < 60) return `${diffMin} min${diffMin !== 1 ? 's' : ''} ago`;
-  if (diffHours < 24)
-    return `${diffHours} min${diffHours !== 1 ? 's' : ''} ago`;
-  if (diffDay < 60) return `${diffDay} min${diffDay !== 1 ? 's' : ''} ago`;
+  // if (diffMin < 60) return `${diffMin} min${diffMin !== 1 ? 's' : ''} ago`;
+  // if (diffHours < 24)
+  //   return `${diffHours} hours${diffHours !== 1 ? 's' : ''} ago`;
+  // if (diffDay < 60) return `${diffDay} day${diffDay !== 1 ? 's' : ''} ago`;
 
   const rawDate = new Date();
   const day = String(rawDate.getDate()).padStart(2, '0');
   const month = String(rawDate.getUTCMonth() + 1).padStart(2, '0');
   const year = rawDate.getFullYear();
 
-  const dateStamp = `${day}/${month}/${year}`;
+  let dateStamp = `${day}/${month}/${year}`;
 
+  if (diffDate === 0) return (dateStamp = 'Today');
+  if (diffDate === 1) return (dateStamp = 'Yesterday');
+  if (diffDate <= 7) return (dateStamp = `${diffDate} days ago`);
+
+  console.log(dateStamp);
   return dateStamp;
 };
+
+const dateWithMinutes = function () {};
 
 const toggleNewNotePage = function (param) {
   return param === 'add'
@@ -67,7 +78,7 @@ const toggleNewNotePage = function (param) {
 };
 
 // Add a new note
-const addNewNote = function () {
+const addNewNote = function (dateInput) {
   const fieldValue = textarea.value.split('\n');
   const headline = fieldValue[0];
   const remaingText = fieldValue.slice(1).join(' ');
@@ -78,8 +89,10 @@ const addNewNote = function () {
     id: Date.now(),
     title: headline,
     body: remaingText,
-    date: formatDate(),
+    date: dateInput,
   };
+
+  console.log(noteObject.date);
 
   // Save data to local Storage
   const saveToLocalStorage = JSON.parse(localStorage.getItem('notes')) || [];
@@ -145,8 +158,16 @@ document.querySelector('.back-to-list').addEventListener('click', () => {
   addNewNote();
 });
 
+// Save new note
 submitBtn.addEventListener('click', () => {
-  addNewNote();
+  const date = new Date();
+  const day = `${date.getDate()}`.padStart(2, 0);
+  const month = `${date.getMonth() + 1}`.padStart(2, 0);
+  const year = date.getFullYear();
+  const fullDate = `${month}/${day}/${year}`;
+
+  addNewNote(fullDate);
+  formatDate(fullDate);
 });
 
 // Share file
